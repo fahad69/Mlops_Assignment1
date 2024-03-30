@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Price Prediction</title>
+</head>
+<body>
+    <h1>Car Price Prediction</h1>
+    <form action="/predict" method="post">
+        <label for="horsepower">Horsepower:</label><br>
+        <input type="number" id="horsepower" name="horsepower" required><br>
+        <label for="enginesize">Engine Size:</label><br>
+        <input type="number" id="enginesize" name="enginesize" required><br>
+        <label for="curbweight">Curb Weight:</label><br>
+        <input type="number" id="curbweight" name="curbweight" required><br>
+        <label for="carwidth">Car Width:</label><br>
+        <input type="number" id="carwidth" name="carwidth" required><br>
+        <label for="highwaympg">Highway MPG:</label><br>
+        <input type="number" id="highwaympg" name="highwaympg" required><br><br>
+        <input type="submit" value="Predict">
+    </form>
+</body>
+</html>
