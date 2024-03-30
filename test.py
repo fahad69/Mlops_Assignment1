@@ -1,31 +1,33 @@
 import unittest
 import pandas as pd
-from sklearn.linear_model import LinearRegression
-from main import load_and_preprocess_data, select_features, train_model
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.metrics import accuracy_score
 
-class TestMain(unittest.TestCase):
-    def setUp(self):
-        self.file_path = 'CarPrice_Assignment.csv'
+# Assuming the provided code is in a file named main.py
+from main import vectorizer, model
 
-    def test_load_and_preprocess_data(self):
-        # Test loading and preprocessing data
-        DataCar = load_and_preprocess_data(self.file_path)
-        self.assertIsInstance(DataCar, pd.DataFrame)
-        self.assertIn('price', DataCar.columns)
-        # Add more assertions as needed to verify the data is correctly loaded and preprocessed
+class TestSpamModel(unittest.TestCase):
 
-    def test_select_features(self):
-        # Test selecting features
-        features = select_features()
-        self.assertIsInstance(features, list)
-        self.assertEqual(len(features), 5)  # Assuming 5 features are selected
-        # Add more assertions as needed to verify the correct features are selected
+    def test_model_accuracy(self):
+        # Load test data
+        test_data = pd.read_csv('spam.csv', encoding='ISO-8859-1')
+        test_data = test_data.drop(['Unnamed: 2', 'Unnamed: 3', 'Unnamed: 4'], axis=1)
+        test_data['v1'] = test_data['v1'].map({'ham': 0, 'spam': 1})
 
-    def test_train_model(self):
-        # Test training the model
-        model = train_model(self.file_path)
-        self.assertIsInstance(model, LinearRegression)
-        # Add more assertions as needed to verify the model is correctly trained
+        x_test = test_data['v2']
+        y_test = test_data['v1']
+
+        # Vectorize test data
+        x_test_vectorized = vectorizer.transform(x_test)
+
+        # Make predictions
+        y_pred = model.predict(x_test_vectorized)
+
+        # Evaluate model accuracy
+        accuracy = accuracy_score(y_test, y_pred)
+        self.assertGreater(accuracy, 0.9)  # Assuming a decent accuracy
 
 if __name__ == '__main__':
     unittest.main()
