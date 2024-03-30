@@ -29,4 +29,5 @@ def train_model():
     return model
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    # If you intend to run a Flask application, you should define and configure the Flask app here
+    pass
