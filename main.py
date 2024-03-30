@@ -1,8 +1,5 @@
-from flask import Flask, render_template, request
 import pandas as pd
 from sklearn.linear_model import LinearRegression
-
-app = Flask(__name__)
 
 # Load the model and prepare it for prediction
 def load_and_preprocess_data(file_path):
@@ -16,14 +13,14 @@ def load_and_preprocess_data(file_path):
     
     return DataCar
 
-selected_features = ['horsepower', 'enginesize', 'curbweight', 'carwidth', 'highwaympg']
 
 def select_features():
-    return selected_features
+    return ['horsepower', 'enginesize', 'curbweight', 'carwidth', 'highwaympg']
+
 
 def train_model():
     DataCar = load_and_preprocess_data('CarPrice_Assignment.csv')
-    X = DataCar[selected_features]
+    X = DataCar[select_features()]
     y = DataCar['price']
 
     model = LinearRegression()
