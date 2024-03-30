@@ -1,5 +1,4 @@
 import pandas as pd
-import pytest
 from sklearn.linear_model import LinearRegression
 from main import load_and_preprocess_data, select_features, train_model
 
