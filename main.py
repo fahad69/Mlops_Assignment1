@@ -1,30 +1,25 @@
 import pandas as pd
-from sklearn.linear_model import LinearRegression
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.naive_bayes import MultinomialNB
+import pickle
 
-# Load the model and prepare it for prediction
-def load_and_preprocess_data(file_path):
-    # Load the model and prepare it for prediction
-    DataCar = pd.read_csv(file_path)
-    DataCar.dropna(inplace=True)
-    DataCar.reset_index(drop=True, inplace=True)
-    DataCar.drop_duplicates(inplace=True)
+# Load data
+data = pd.read_csv('spam.csv', encoding='ISO-8859-1')
+data = data.drop(['Unnamed: 2', 'Unnamed: 3', 'Unnamed: 4'], axis=1)
+data['v1'] = data['v1'].map({'ham': 0, 'spam': 1})
 
-    DataCar = pd.get_dummies(DataCar, columns=['fueltype', 'aspiration', 'carbody', 'drivewheel', 'enginelocation', 'enginetype', 'cylindernumber', 'fuelsystem'])
-    
-    return DataCar
+# Split data into features and labels
+x = data['v2']
+y = data['v1']
 
+# Vectorize text data
+vectorizer = TfidfVectorizer()
+x_vectorized = vectorizer.fit_transform(x)
 
-def select_features():
-    return ['horsepower', 'enginesize', 'curbweight', 'carwidth', 'highwaympg']
+# Train model
+model = MultinomialNB()
+model.fit(x_vectorized, y)
 
-
-def train_model():
-    DataCar = load_and_preprocess_data('CarPrice_Assignment.csv')
-    X = DataCar[select_features()]
-    y = DataCar['price']
-
-    model = LinearRegression()
-    model.fit(X, y)
-    
-    return model
-
+# Save the model
+pickle.dump(model, open('model.pkl', 'wb'))
+print('Model saved as model.pkl')
