@@ -4,6 +4,7 @@ from sklearn.metrics import accuracy_score
 
 from main import vectorizer, model
 
+
 class TestSpamModel(unittest.TestCase):
 
     def test_model_accuracy(self):
@@ -19,7 +20,8 @@ class TestSpamModel(unittest.TestCase):
         y_pred = model.predict(x_test_vectorized)
 
         accuracy = accuracy_score(y_test, y_pred)
-        self.assertGreater(accuracy, 0.9)
+        self.assertGreater(accuracy, 0.9)  
+
 
 if __name__ == '__main__':
     unittest.main()
