@@ -1,4 +1,4 @@
-name: Python Pytest for Model Accuracy
+name: Python Unittest for Model Accuracy
 
 on:
   push:
@@ -6,8 +6,8 @@ on:
       - test
 
 jobs:
-  pytest_model_accuracy:
-    name: Pytest for Model Accuracy
+  unittest_model_accuracy:
+    name: Unittest for Model Accuracy
     runs-on: ubuntu-latest
 
     steps:
@@ -24,6 +24,6 @@ jobs:
         python -m pip install --upgrade pip
         pip install pandas scikit-learn
 
-    - name: Run Pytest for model accuracy
+    - name: Run Unittest for model accuracy
       run: |
-        pytest test.py
+        python -m unittest test.py
